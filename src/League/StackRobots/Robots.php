@@ -30,7 +30,7 @@ class Robots implements HttpKernelInterface
 	 * @param string              $env    The environment variable to compare against.
 	 * @param string              $envVar The environment variable to inspect.
 	 */
-	public function __construct(HttpKernelInterface $app, $env, $envVar = 'SERVER_ENV')
+	public function __construct(HttpKernelInterface $app, $env = 'production', $envVar = 'SERVER_ENV')
     {
         $this->app = $app;
         $this->env = $env;
