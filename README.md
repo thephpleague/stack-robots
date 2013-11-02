@@ -17,6 +17,33 @@ It provides a default robots.txt for non-production environments.
 }
 ```
 
+## Usage
+
+StackaRobots is a very simple middleware. Be default it looks at the `SERVER_ENV` environment variable,
+and if the `SERVER_ENV` does not equal production, it captures the response and sets an `X-Robots-Tag`
+header with a value of `noindex, nofollow, noarchive`.
+
+When you push the middleware on to the stack, you can pass 2 additional parameters, `$env` and `$envVar`.
+The `$env` parameter is the environment in which you want this middleware to not do anything, typically
+`production`. The `$envVar` parameter is the environment variable that holds the environment of the
+current server; it defaults to `SERVER_ENV`.
+
+If the value of `SERVER_ENV` matches the value that is passed, this middleware will just pass control on
+to the next middleware. However, if it does not match, then StackRobots will set the `X-Robots-Tag`.
+Additionally, if the incoming request is for your `/robots.txt` file, then StackRobots will stop the request
+and send the following response.
+
+```php
+return new Response("User-Agent: *\nDisallow: /", 200, array('Content-Type' => 'text/plain'));
+```
+And this is what the browser receives.
+```txt
+User-Agent: *
+Disallow: /
+```
+
+> More info on the `X-Robots-Tag` is available [here](https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag).
+
 ## Example
 
 ```php
