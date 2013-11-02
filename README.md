@@ -4,22 +4,22 @@
 [![Total Downloads](https://poser.pugx.org/league/stack-robots/downloads.png)](https://packagist.org/packages/league/stack-robots)
 [![Latest Stable Version](https://poser.pugx.org/league/stack-robots/v/stable.png)](https://packagist.org/packages/league/stack-robots)
 
-StackRobots is a middleware for [StackPHP](http://stackphp.com), based heavily off of [Cylon](https://github.com/dmathieu/cylon) for Ruby.
-It provides a default robots.txt for non-production environments.
+StackRobots is a middleware for [StackPHP](http://stackphp.com). It provides a default robots.txt for
+non-production environments.
 
 ## Install Via Composer
 
 ```json
 {
     "require": {
-        "league/stack-robots": "~1.0@dev"
+        "league/stack-robots": "~1.0"
     }
 }
 ```
 
 ## Usage
 
-StackaRobots is a very simple middleware. Be default it looks at the `SERVER_ENV` environment variable,
+StackRobots is a very simple middleware. By default it looks at the `SERVER_ENV` environment variable,
 and if the `SERVER_ENV` does not equal production, it captures the response and sets an `X-Robots-Tag`
 header with a value of `noindex, nofollow, noarchive`.
 
@@ -60,12 +60,13 @@ $app = new Stack\CallableHttpKernel(function (Request $request) {
 putenv('SERVER_ENV=dev');
 
 $app = (new Stack\Builder)
-    ->push('League\\StackRobots\\Robots', 'production')
+    ->push('League\\StackRobots\\Robots')
     ->resolve($app);
 
 Stack\run($app);
 ```
 
-## Todo
+## Authors
 
-- Add support for `X-Robots-Tag` header
+- Don Gilbert [@dilbert4life](http://twitter.com/dilbert4life)
+- Inspired by [Cylon](https://github.com/dmathieu/cylon) for Ruby.
