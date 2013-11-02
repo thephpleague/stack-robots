@@ -1,5 +1,9 @@
 # League\StackRobots
 
+[![Build Status](https://travis-ci.org/php-loep/StackRobots.png?branch=master)](https://travis-ci.org/php-loep/StackRobots)
+[![Total Downloads](https://poser.pugx.org/league/stack-robots/downloads.png)](https://packagist.org/packages/league/stack-robots)
+[![Latest Stable Version](https://poser.pugx.org/league/stack-robots/v/stable.png)](https://packagist.org/packages/league/stack-robots)
+
 StackRobots is a middleware for [StackPHP](http://stackphp.com), based heavily off of [Cylon](https://github.com/dmathieu/cylon) for Ruby.
 It provides a default robots.txt for non-production environments.
 
