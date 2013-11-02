@@ -8,156 +8,183 @@ putenv('SERVER_ENV=production');
 
 class RobotsTest extends \PHPUnit_Framework_TestCase
 {
-	/**
-	 * The object to be tested.
-	 *
-	 * @var Robots
-	 */
-	protected $fixture;
+    /**
+     * The object to be tested.
+     *
+     * @var Robots
+     */
+    protected $fixture;
 
-	/**
-	 * Setup the tests.
-	 *
-	 * @return void
-	 */
-	public function setUp()
-	{
-		$mockApp = $this->getMock('Symfony\\Component\\HttpKernel\\HttpKernelInterface');
+    /**
+     * Setup the tests.
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        $mockApp = $this->getMock('Symfony\\Component\\HttpKernel\\HttpKernelInterface');
 
-		$this->fixture = new Robots($mockApp);
-	}
+        $this->fixture = new Robots($mockApp);
+    }
 
-	/**
-	 * The app property should be an instanceof HttpKernelInterface
-	 *
-	 * @return void
-	 */
-	public function testConstructPassesApp()
-	{
-		$this->assertAttributeInstanceOf(
-			'Symfony\\Component\\HttpKernel\\HttpKernelInterface',
-			'app',
-			$this->fixture,
-			'The app property should be an instanceof HttpKernelInterface'
-		);
-	}
+    /**
+     * The app property should be an instanceof HttpKernelInterface
+     *
+     * @return void
+     */
+    public function testConstructPassesApp()
+    {
+        $this->assertAttributeInstanceOf(
+            'Symfony\\Component\\HttpKernel\\HttpKernelInterface',
+            'app',
+            $this->fixture,
+            'The app property should be an instanceof HttpKernelInterface'
+        );
+    }
 
-	/**
-	 * The env property should be set to the value set in the constructor.
-	 *
-	 * @return void
-	 */
-	public function testConstructDefaultEnv()
-	{
-		$this->assertAttributeEquals(
-			'production',
-			'env',
-			$this->fixture,
-			'The env property should be set to the value set in the constructor.'
-		);
-	}
+    /**
+     * The env property should be set to the value set in the constructor.
+     *
+     * @return void
+     */
+    public function testConstructDefaultEnv()
+    {
+        $this->assertAttributeEquals(
+            'production',
+            'env',
+            $this->fixture,
+            'The env property should be set to the value set in the constructor.'
+        );
+    }
 
-	/**
-	 * The envVar property should be set to the value set in the constructor.
-	 *
-	 * @return void
-	 */
-	public function testConstructDefaultEnvVar()
-	{
-		$this->assertAttributeEquals(
-			'SERVER_ENV',
-			'envVar',
-			$this->fixture,
-			'The envVar property should be set to the value set in the constructor.'
-		);
-	}
+    /**
+     * The envVar property should be set to the value set in the constructor.
+     *
+     * @return void
+     */
+    public function testConstructDefaultEnvVar()
+    {
+        $this->assertAttributeEquals(
+            'SERVER_ENV',
+            'envVar',
+            $this->fixture,
+            'The envVar property should be set to the value set in the constructor.'
+        );
+    }
 
-	/**
-	 * The env property should be set to the value passed to the constructor.
-	 *
-	 * @return void
-	 */
-	public function testConstructPassesEnv()
-	{
-		$mockApp = $this->getMock('Symfony\\Component\\HttpKernel\\HttpKernelInterface');
+    /**
+     * The env property should be set to the value passed to the constructor.
+     *
+     * @return void
+     */
+    public function testConstructPassesEnv()
+    {
+        $mockApp = $this->getMock('Symfony\\Component\\HttpKernel\\HttpKernelInterface');
 
-		$this->fixture = new Robots($mockApp, 'testing');
+        $this->fixture = new Robots($mockApp, 'testing');
 
-		$this->assertAttributeEquals(
-			'testing',
-			'env',
-			$this->fixture,
-			'The env property should be set to the value passed to the constructor.'
-		);
-	}
+        $this->assertAttributeEquals(
+            'testing',
+            'env',
+            $this->fixture,
+            'The env property should be set to the value passed to the constructor.'
+        );
+    }
 
-	/**
-	 * The envVar property should be set to the value passed to the constructor.
-	 *
-	 * @return void
-	 */
-	public function testConstructPassesEnvVar()
-	{
-		$mockApp = $this->getMock('Symfony\\Component\\HttpKernel\\HttpKernelInterface');
+    /**
+     * The envVar property should be set to the value passed to the constructor.
+     *
+     * @return void
+     */
+    public function testConstructPassesEnvVar()
+    {
+        $mockApp = $this->getMock('Symfony\\Component\\HttpKernel\\HttpKernelInterface');
 
-		$this->fixture = new Robots($mockApp, 'testing', 'MY_ENVVAR');
+        $this->fixture = new Robots($mockApp, 'testing', 'MY_ENVVAR');
 
-		$this->assertAttributeEquals(
-			'MY_ENVVAR',
-			'envVar',
-			$this->fixture,
-			'The envVar property should be set to the value passed to the constructor.'
-		);
-	}
+        $this->assertAttributeEquals(
+            'MY_ENVVAR',
+            'envVar',
+            $this->fixture,
+            'The envVar property should be set to the value passed to the constructor.'
+        );
+    }
 
-	/**
-	 * Test a request for robots.txt sends the proper response.
-	 *
-	 * @return void
-	 */
-	public function testHandleSendsResponse()
-	{
-		$mockApp = $this->getMock('Symfony\\Component\\HttpKernel\\HttpKernelInterface');
-		$mockRequest = $this->getMock('Symfony\Component\HttpFoundation\Request', array('getPathInfo'));
+    /**
+     * Test a request for robots.txt sends the proper response.
+     *
+     * @return void
+     */
+    public function testHandleSendsResponse()
+    {
+        $mockApp = $this->getMock('Symfony\\Component\\HttpKernel\\HttpKernelInterface');
+        $mockRequest = $this->getMock('Symfony\Component\HttpFoundation\Request', array('getPathInfo'));
 
-		$mockRequest->expects($this->once())
-			->method('getPathInfo')
-			->will($this->returnValue('/robots.txt'));
+        $mockRequest->expects($this->once())
+            ->method('getPathInfo')
+            ->will($this->returnValue('/robots.txt'));
 
-		$this->fixture = new Robots($mockApp, 'testing');
+        $this->fixture = new Robots($mockApp, 'testing');
 
-		$response = $this->fixture->handle($mockRequest);
+        $response = $this->fixture->handle($mockRequest);
 
-		$expectedResponse = new Response("User-Agent: *\nDisallow: /", 200, array('Content-Type' => 'text/plain'));
+        $expectedResponse = new Response("User-Agent: *\nDisallow: /", 200, array('Content-Type' => 'text/plain'));
 
-		$this->assertEquals(
-			$expectedResponse,
-			$response,
-			'When requesting the robots.txt file, the proper response should be received.'
-		);
-	}
+        $this->assertEquals(
+            $expectedResponse,
+            $response,
+            'When requesting the robots.txt file, the proper response should be received.'
+        );
+    }
 
-	/**
-	 * Test a typical handling of a request.
-	 *
-	 * @return void
-	 */
-	public function testHandle()
-	{
-		$mockApp = $this->getMock('Symfony\\Component\\HttpKernel\\HttpKernelInterface', array('handle'));
-		$mockRequest = $this->getMock('Symfony\Component\HttpFoundation\Request', array('getPathInfo'));
+    /**
+     * Test a typical handling of a request.
+     *
+     * @return void
+     */
+    public function testHandle()
+    {
+        $mockApp = $this->getMock('Symfony\\Component\\HttpKernel\\HttpKernelInterface', array('handle'));
+        $mockRequest = $this->getMock('Symfony\Component\HttpFoundation\Request');
 
+        $mockApp->expects($this->once())
+            ->method('handle')
+            ->will($this->returnValue('foo'));
 
-		$mockApp->expects($this->once())
-			->method('handle')
-			->will($this->returnValue('foo'));
+        $this->fixture = new Robots($mockApp);
 
-		$this->fixture = new Robots($mockApp, 'testing');
+        $this->assertSame(
+            'foo',
+            $this->fixture->handle($mockRequest),
+            'When in a production environment, the handler should be passed on to the next middleware.'
+        );
+    }
 
-		$this->assertEquals(
-			'foo',
-			$this->fixture->handle($mockRequest),
-			'When in the production environment, the handler should be passed on to the next middleware.'
-		);
-	}
+    /**
+     * Tests that a X-Robots-Tag is present in the response
+     *
+     * @return void
+     */
+    public function testHandleSetsXRobotsTagHeader()
+    {
+        $mockApp = $this->getMock('Symfony\\Component\\HttpKernel\\HttpKernelInterface', array('handle'));
+        $mockRequest = $this->getMock('Symfony\Component\HttpFoundation\Request');
+        $mockResponse = $this->getMock('Symfony\Component\HttpFoundation\Response');
+
+        $mockApp->expects($this->once())
+            ->method('handle')
+            ->will($this->returnValue($mockResponse));
+
+        $this->fixture = new Robots($mockApp, 'testing');
+
+        $response = $this->fixture->handle($mockRequest);
+
+        $this->assertAttributeContains(
+            'X-Robots-Tag',
+            'headerNames',
+            $response->headers,
+            'When not in the production environment, a X-Robots-Tag header should be set.',
+            true // ignores case
+        );
+    }
 }

@@ -43,11 +43,15 @@ class Robots implements HttpKernelInterface
     public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
     {
         if (getenv($this->envVar) !== $this->env) {
-            // @TODO: Add support for X-Robots-Tag
-
             if ($request->getPathInfo() === '/robots.txt') {
                 return new Response("User-Agent: *\nDisallow: /", 200, array('Content-Type' => 'text/plain'));
             }
+
+            $response = $this->app->handle($request, $type, $catch);
+
+            $response->headers->set('X-Robots-Tag', 'noindex, nofollow, noarchive');
+
+            return $response;
         }
 
         return $this->app->handle($request, $type, $catch);
