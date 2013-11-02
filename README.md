@@ -34,3 +34,7 @@ $app = (new Stack\Builder)
 
 Stack\run($app);
 ```
+
+## Todo
+
+- Add support for `X-Robots-Tag` header
